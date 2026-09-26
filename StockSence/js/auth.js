@@ -122,45 +122,42 @@ window.signup = async function (event) {
 // =========================
 
 window.login = async function (event) {
+    event.preventDefault();
 
-  event.preventDefault();
+    const email = document
+        .getElementById("loginId")
+        .value.trim();
 
+    const password = document
+        .getElementById("password")
+        .value;
 
-  const email = document
-    .getElementById("loginId")
-    .value.trim();
+    try {
 
-  const password =
-    document.getElementById("password").value;
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
+        showMessage(
+            "loginMessage",
+            "Login successful!",
+            true
+        );
 
-  try {
+        // Open dashboard
+        window.location.href = "dashboard.html";
 
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    } catch (error) {
 
+        console.error("LOGIN ERROR:", error);
 
-    showMessage(
-      "loginMessage",
-      "Login successful!",
-      true
-    );
-
-
-    window.location.href = "../dashboard.html";
-
-
-  } catch (error) {
-
-    showMessage(
-      "loginMessage",
-      "Invalid email or password."
-    );
-
-  }
+        showMessage(
+            "loginMessage",
+            "Invalid email or password."
+        );
+    }
 };
 
 
